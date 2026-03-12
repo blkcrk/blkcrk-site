@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Black Creek Technology</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --accent: #00F5FF;
+      --text: #f0f0f0;
+      --muted: #888;
+    }
+    body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    a { color: var(--accent); text-decoration: none; }
+
+    /* NAV */
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 8%; position: sticky; top: 0; background: rgba(10,10,15,0.85); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid #1a1a2e; }
+    .logo { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.5px; }
+    .logo span { color: var(--accent); }
+    nav ul { list-style: none; display: flex; gap: 32px; }
+    nav ul a { color: var(--muted); font-size: 0.95rem; transition: color 0.2s; }
+    nav ul a:hover { color: var(--accent); }
+
+    /* HERO */
+    #hero { min-height: 92vh; display: flex; flex-direction: column; justify-content: center; padding: 0 8%; position: relative; overflow: hidden; }
+    #hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(0,245,255,0.08) 0%, transparent 70%); pointer-events: none; }
+    .tag { display: inline-block; color: var(--accent); border: 1px solid rgba(0,245,255,0.3); padding: 4px 14px; border-radius: 20px; font-size: 0.85rem; margin-bottom: 24px; letter-spacing: 1px; }
+    h1 { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 700; line-height: 1.1; letter-spacing: -2px; max-width: 800px; }
+    h1 span { color: var(--accent); }
+    .hero-sub { color: var(--muted); font-size: 1.2rem; max-width: 560px; margin: 24px 0 40px; }
+    .btn { display: inline-block; background: var(--accent); color: #000; padding: 14px 32px; border-radius: 6px; font-weight: 600; font-size: 1rem; transition: opacity 0.2s; }
+    .btn:hover { opacity: 0.85; }
+    .btn-outline { background: transparent; color: var(--accent); border: 1px solid var(--accent); margin-left: 16px; }
+
+    /* SERVICES */
+    #services { padding: 100px 8%; background: var(--bg2); }
+    .section-label { color: var(--accent); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+    h2 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; letter-spacing: -1px; margin-bottom: 60px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .card { background: var(--bg); border: 1px solid #1a1a2e; border-radius: 12px; padding: 32px; transition: border-color 0.2s, transform 0.2s; }
+    .card:hover { border-color: rgba(0,245,255,0.4); transform: translateY(-4px); }
+    .card-icon { font-size: 2rem; margin-bottom: 16px; }
+    .card h3 { font-size: 1.2rem; margin-bottom: 10px; }
+    .card p { color: var(--muted); font-size: 0.95rem; }
+
+    /* ABOUT */
+    #about { padding: 100px 8%; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    #about p { color: var(--muted); margin-bottom: 16px; font-size: 1.05rem; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
+    .stat { border-left: 2px solid var(--accent); padding-left: 16px; }
+    .stat h3 { font-size: 2rem; font-weight: 700; color: var(--accent); }
+    .stat p { color: var(--muted); font-size: 0.9rem; }
+
+    /* CONTACT */
+    #contact { padding: 100px 8%; background: var(--bg2); text-align: center; }
+    #contact h2 { margin-bottom: 16px; }
+    #contact p { color: var(--muted); max-width: 500px; margin: 0 auto 40px; }
+    form { display: flex; flex-direction: column; gap: 16px; max-width: 520px; margin: 0 auto; }
+    input, textarea { background: var(--bg); border: 1px solid #1a1a2e; color: var(--text); padding: 14px 18px; border-radius: 6px; font-family: inherit; font-size: 1rem; transition: border-color 0.2s; }
+    input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+    textarea { resize: vertical; min-height: 140px; }
+    button[type=submit] { background: var(--accent); color: #000; padding: 14px; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
+    button[type=submit]:hover { opacity: 0.85; }
+
+    /* FOOTER */
+    footer { padding: 32px 8%; border-top: 1px solid #1a1a2e; display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.9rem; }
+
+    @media (max-width: 768px) {
+      #about { grid-template-columns: 1fr; gap: 40px; }
+      nav ul { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Black Creek<span>.</span></div>
+    <ul>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <div class="tag">Data Engineering · ML/AI Enablement</div>
+    <h1>Build Smarter.<br><span>Scale Faster.</span></h1>
+    <p class="hero-sub">Black Creek Technology helps organizations unlock the power of data and AI — from pipeline architecture to production ML systems.</p>
+    <div>
+      <a href="#contact" class="btn">Get in Touch</a>
+      <a href="#services" class="btn btn-outline">Our Services</a>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="section-label">What We Do</div>
+    <h2>End-to-End Data & AI Solutions</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">⚙️</div>
+        <h3>Data Engineering</h3>
+        <p>Modern data pipelines, lakehouse architecture, ETL/ELT, and real-time streaming solutions built for scale.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h3>ML/AI Enablement</h3>
+        <p>From model development to production deployment — we help teams build, train, and ship ML systems with confidence.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🧠</div>
+        <h3>AI Agent Systems</h3>
+        <p>Design and deploy intelligent agent orchestration systems that automate complex workflows and decision-making.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>Data Strategy</h3>
+        <p>Advisory services to align your data infrastructure, governance, and analytics capabilities with business goals.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div>
+      <div class="section-label">About Us</div>
+      <h2>Technology That Moves Business Forward</h2>
+      <p>Black Creek Technology is a boutique consultancy specializing in data engineering and ML/AI enablement for forward-thinking organizations.</p>
+      <p>We partner with teams to design scalable infrastructure, implement modern AI capabilities, and deliver measurable outcomes — fast.</p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat"><h3>10+</h3><p>Years of experience</p></div>
+      <div class="stat"><h3>50+</h3><p>Projects delivered</p></div>
+      <div class="stat"><h3>100%</h3><p>Cloud native</p></div>
+      <div class="stat"><h3>24/7</h3><p>Support available</p></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-label">Get In Touch</div>
+    <h2>Let's Build Something Great</h2>
+    <p>Ready to modernize your data stack or enable AI at scale? We'd love to hear about your project.</p>
+    <form>
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea placeholder="Tell us about your project..."></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <span>© 2026 Black Creek Technology</span>
+    <span>blkcrk.com</span>
+  </footer>
+
+</body>
+</html>
