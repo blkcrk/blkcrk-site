@@ -1,0 +1,17 @@
+# Black Creek Technology
+> Boutique consultancy specializing in data engineering and ML/AI enablement.
+
+## About
+Black Creek Technology helps organizations unlock the power of data and AI — from pipeline architecture to production ML systems.
+
+## Services
+- Data Engineering: Modern pipelines, lakehouse architecture, ETL/ELT, real-time streaming
+- ML/AI Enablement: Model development, training, and production deployment
+- AI Agent Systems: Intelligent agent orchestration for complex workflow automation
+- Data Strategy: Advisory services for data infrastructure, governance, and analytics
+
+## Demo
+https://demo.blkcrk.com — Live AI agent orchestration demo
+
+## Contact
+https://blkcrk.com/#contact
