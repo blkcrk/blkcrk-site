@@ -35,7 +35,23 @@ export default async function handler(req, res) {
     const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL;
 
     if (resendApiKey) {
-      const html = `
+      const sendEmail = async (payload) => {
+        const response = await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${resendApiKey}`,
+          },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          const text = await response.text().catch(() => '');
+          throw new Error(`Resend delivery failed (${response.status}): ${text.slice(0, 300)}`);
+        }
+      };
+
+      const internalHtml = `
         <h2>New Black Creek assessment submission</h2>
         <p><strong>Name:</strong> ${escapeHtml(submission.name)}</p>
         <p><strong>Email:</strong> ${escapeHtml(submission.email)}</p>
@@ -49,25 +65,30 @@ export default async function handler(req, res) {
         <pre style="white-space:pre-wrap;font:inherit">${escapeHtml(submission.message)}</pre>
       `;
 
-      const response = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${resendApiKey}`,
-        },
-        body: JSON.stringify({
-          from: fromEmail,
-          to: [toEmail],
-          reply_to: submission.email,
-          subject: `New assessment: ${submission.name}${submission.company ? ` @ ${submission.company}` : ''}`,
-          html,
-        }),
+      const prospectFirstName = escapeHtml(String(submission.name).split(/\s+/)[0] || submission.name);
+      const nurtureHtml = `
+        <p>Hi ${prospectFirstName},</p>
+        <p>Thanks for taking the time to run the Black Creek inbound workflow assessment.</p>
+        <p>I received your submission and the context around ${escapeHtml(assessment.likelyBottleneck || 'your workflow bottleneck')}. I’ll review it and follow up with the most relevant next step rather than sending a generic reply.</p>
+        <p>In the meantime, if there’s anything important I should know about lead volume, response speed, routing issues, or the tools already in place, just reply directly to this email.</p>
+        <p>Best,<br>Chris Miller<br>Black Creek Technology</p>
+      `;
+
+      await sendEmail({
+        from: fromEmail,
+        to: [toEmail],
+        reply_to: submission.email,
+        subject: `New assessment: ${submission.name}${submission.company ? ` @ ${submission.company}` : ''}`,
+        html: internalHtml,
       });
 
-      if (!response.ok) {
-        const text = await response.text().catch(() => '');
-        throw new Error(`Resend delivery failed (${response.status}): ${text.slice(0, 300)}`);
-      }
+      await sendEmail({
+        from: fromEmail,
+        to: [submission.email],
+        reply_to: toEmail,
+        subject: 'Thanks for reaching out to Black Creek',
+        html: nurtureHtml,
+      });
     } else if (webhookUrl) {
       const response = await fetch(webhookUrl, {
         method: 'POST',
