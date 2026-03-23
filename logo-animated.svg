@@ -1,0 +1,14 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" fill="#000000"/>
+  <path d="M140 120 C260 120 260 392 380 392" stroke="#FFFFFF" stroke-width="40" fill="none" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100">
+    <animate attributeName="stroke-dashoffset" values="100;0;0" keyTimes="0;0.45;1" dur="3.6s" repeatCount="indefinite"/>
+  </path>
+  <circle cx="140" cy="120" r="14" fill="#FFFFFF">
+    <animate attributeName="r" values="14;18;14" dur="2.4s" repeatCount="indefinite" begin="0.2s"/>
+    <animate attributeName="opacity" values="1;0.7;1" dur="2.4s" repeatCount="indefinite" begin="0.2s"/>
+  </circle>
+  <circle cx="380" cy="392" r="14" fill="#FFFFFF">
+    <animate attributeName="r" values="14;18;14" dur="2.4s" repeatCount="indefinite" begin="0.8s"/>
+    <animate attributeName="opacity" values="1;0.7;1" dur="2.4s" repeatCount="indefinite" begin="0.8s"/>
+  </circle>
+</svg>
