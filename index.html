@@ -9,25 +9,32 @@
   <meta property="og:description" content="Modern data platforms, production AI systems, and agent workflows built for real business outcomes.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://blkcrk.com/">
+  <meta property="og:image" content="https://blkcrk.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blkcrk.com/og-image.png">
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #0a0a0f;
-      --bg2: #111118;
-      --bg3: #151520;
-      --accent: #00F5FF;
-      --accent-soft: rgba(0,245,255,0.12);
-      --text: #f0f0f0;
-      --muted: #9a9aa8;
-      --border: #1a1a2e;
+      --bg: #000000;
+      --bg2: #0a0a0a;
+      --bg3: #111111;
+      --accent: #ffffff;
+      --accent-soft: rgba(255,255,255,0.08);
+      --text: #ffffff;
+      --muted: #6b7280;
+      --border: #1f2937;
       --max: 1200px;
+      --font-primary: Inter, system-ui, -apple-system, sans-serif;
+      --radius: 6px;
     }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    body { font-family: var(--font-primary); background: var(--bg); color: var(--text); line-height: 1.6; }
     a { color: var(--accent); text-decoration: none; }
     .container { width: min(100% - 3rem, var(--max)); margin: 0 auto; }
 
@@ -47,8 +54,9 @@
       padding: 20px 0;
       gap: 24px;
     }
-    .logo { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.5px; color: var(--text); }
-    .logo span { color: var(--accent); }
+    .logo { display:flex; align-items:center; gap:12px; font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; color: var(--text); }
+    .logo img { width: 28px; height: 28px; display:block; }
+    .logo-wordmark { height: 22px; width: auto; display:block; }
     nav ul { list-style: none; display: flex; gap: 28px; align-items: center; }
     nav ul a { color: var(--muted); font-size: 0.95rem; transition: color 0.2s; }
     nav ul a:hover { color: var(--accent); }
@@ -389,7 +397,7 @@
 
   <nav>
     <div class="container nav-inner">
-      <a href="#hero" class="logo">Black Creek<span>.</span></a>
+      <a href="#hero" class="logo"><img src="/logo.svg" alt="Black Creek logo"><img src="/wordmark.svg" alt="blkcrk" class="logo-wordmark"></a>
       <ul>
         <li><a href="#services">Services</a></li>
         <li><a href="/assess">Assessment</a></li>

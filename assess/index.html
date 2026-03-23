@@ -5,25 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Assess Your Inbound Workflow | Black Creek Technology</title>
   <meta name="description" content="Run a fast inbound workflow assessment to identify likely bottlenecks, fit, and the next best step.">
+  <meta property="og:image" content="https://blkcrk.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://blkcrk.com/og-image.png">
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     :root {
-      --bg: #0a0a0f;
-      --bg2: #111118;
-      --card: #151520;
-      --border: #1f2431;
-      --text: #f0f0f0;
-      --muted: #9ca3af;
-      --accent: #00F5FF;
-      --accent-soft: rgba(0,245,255,0.10);
+      --bg: #000000;
+      --bg2: #0a0a0a;
+      --card: #111111;
+      --border: #1f2937;
+      --text: #ffffff;
+      --muted: #6b7280;
+      --accent: #ffffff;
+      --accent-soft: rgba(255,255,255,0.08);
       --good: #22c55e;
       --warn: #f59e0b;
       --bad: #ef4444;
       --max: 1120px;
+      --font-primary: Inter, system-ui, -apple-system, sans-serif;
+      --radius: 6px;
     }
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      font-family: var(--font-primary);
       background: linear-gradient(180deg, var(--bg) 0%, #0f172a 100%);
       color: var(--text);
       line-height: 1.6;
@@ -39,8 +45,9 @@
     .nav-inner {
       display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0;
     }
-    .logo { color: var(--text); font-weight: 700; font-size: 1.2rem; }
-    .logo span { color: var(--accent); }
+    .logo { display:flex; align-items:center; gap:12px; color: var(--text); font-weight: 600; font-size: 1.05rem; }
+    .logo img { width: 28px; height: 28px; display:block; }
+    .logo-wordmark { height: 22px; width: auto; display:block; }
     .nav-links { display:flex; gap:18px; align-items:center; }
     .nav-links a { color: var(--muted); }
     .nav-links a:last-child {
@@ -125,7 +132,7 @@
 <body>
   <nav>
     <div class="container nav-inner">
-      <a href="/" class="logo">Black Creek<span>.</span></a>
+      <a href="/" class="logo"><img src="/logo.svg" alt="Black Creek logo"><img src="/wordmark.svg" alt="blkcrk" class="logo-wordmark"></a>
       <div class="nav-links">
         <a href="/">Main site</a>
         <a href="mailto:hello@blkcrk.com?subject=Inbound%20workflow%20assessment">Talk to Black Creek</a>
