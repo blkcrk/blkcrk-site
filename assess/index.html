@@ -210,6 +210,7 @@
           <p class="status" id="status">Status: <strong>idle</strong></p>
         </div>
         <p class="error" id="error"></p>
+        <p class="fine">Submissions are captured server-side when a delivery target is configured.</p>
       </form>
 
       <section class="panel" id="result">
@@ -380,7 +381,7 @@
     const errorEl = document.getElementById('error');
     const resultEl = document.getElementById('result');
 
-    formEl.addEventListener('submit', (event) => {
+    formEl.addEventListener('submit', async (event) => {
       event.preventDefault();
       errorEl.textContent = '';
       statusEl.innerHTML = 'Status: <strong>submitting</strong>';
@@ -424,6 +425,24 @@
         li.textContent = bullet;
         focus.appendChild(li);
       });
+
+      try {
+        const response = await fetch('/api/assess', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ submission: form, assessment: result })
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || payload.ok !== true) {
+          throw new Error(payload.error || 'Submission capture failed.');
+        }
+      } catch (error) {
+        errorEl.textContent = error.message || 'Submission capture failed.';
+        statusEl.innerHTML = 'Status: <strong>error</strong>';
+        resultEl.style.display = 'grid';
+        resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
 
       localStorage.setItem('blkcrk_assessment_last', JSON.stringify({ form, result, at: new Date().toISOString() }));
       resultEl.style.display = 'grid';
