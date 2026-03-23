@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assess Your Inbound Workflow | Black Creek Technology</title>
+  <meta name="description" content="Run a fast inbound workflow assessment to identify likely bottlenecks, fit, and the next best step.">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --card: #151520;
+      --border: #1f2431;
+      --text: #f0f0f0;
+      --muted: #9ca3af;
+      --accent: #00F5FF;
+      --accent-soft: rgba(0,245,255,0.10);
+      --good: #22c55e;
+      --warn: #f59e0b;
+      --bad: #ef4444;
+      --max: 1120px;
+    }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: linear-gradient(180deg, var(--bg) 0%, #0f172a 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    .container { width: min(100% - 2rem, var(--max)); margin: 0 auto; }
+    nav {
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,15,0.86);
+      backdrop-filter: blur(12px);
+      position: sticky; top: 0; z-index: 10;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0;
+    }
+    .logo { color: var(--text); font-weight: 700; font-size: 1.2rem; }
+    .logo span { color: var(--accent); }
+    .nav-links { display:flex; gap:18px; align-items:center; }
+    .nav-links a { color: var(--muted); }
+    .nav-links a:last-child {
+      color: var(--accent);
+      border: 1px solid rgba(0,245,255,0.35);
+      border-radius: 999px;
+      padding: 10px 16px;
+    }
+    main { padding: 48px 0 72px; }
+    .hero {
+      display: grid; gap: 18px; margin-bottom: 28px;
+    }
+    .eyebrow {
+      display:inline-block; width: fit-content;
+      color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      border: 1px solid rgba(0,245,255,0.28); background: var(--accent-soft); border-radius: 999px; padding: 6px 12px;
+    }
+    h1 { margin: 0; font-size: clamp(2.2rem, 5vw, 4.2rem); line-height: 1.03; letter-spacing: -0.04em; max-width: 900px; }
+    .hero p { margin: 0; color: #d1d5db; font-size: 1.1rem; max-width: 780px; }
+    .feature-grid, .metrics-grid, .result-grid { display:grid; gap:16px; }
+    .feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 28px; }
+    .card, .panel {
+      background: rgba(21,21,32,0.92);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    }
+    .card { padding: 20px; }
+    .card h2, .card h3 { margin: 0 0 8px; }
+    .card p { margin: 0; color: var(--muted); }
+    .form-wrap { display:grid; gap: 24px; }
+    form.panel { padding: 24px; }
+    .form-title { font-size: 1.8rem; margin: 0 0 8px; }
+    .form-copy { margin: 0 0 18px; color: var(--muted); max-width: 760px; }
+    .two-col, .three-col { display:grid; gap:16px; }
+    .two-col { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three-col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    label { display:grid; gap:8px; font-weight:600; }
+    input, select, textarea {
+      width: 100%; padding: 14px 14px; border-radius: 14px; border: 1px solid #334155;
+      background: #0f172a; color: white; font: inherit;
+    }
+    textarea { min-height: 170px; resize: vertical; }
+    .actions { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+    button, .button {
+      display:inline-block; border:none; cursor:pointer; background: var(--accent); color:#001018;
+      font-weight:700; padding: 13px 18px; border-radius: 14px; font-size: 1rem;
+    }
+    .button-outline {
+      background: transparent; color: var(--accent); border: 1px solid rgba(0,245,255,0.45);
+    }
+    .status { color: var(--muted); margin: 0; }
+    .error { color: #fca5a5; margin: 0; }
+    #result { display:none; }
+    .result-badge {
+      padding: 10px 14px; border-radius: 999px; font-weight: 800; letter-spacing: 0.05em; font-size: 0.9rem;
+    }
+    .result-head {
+      display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    }
+    .result-title { font-size: 2rem; line-height:1.08; margin: 8px 0; }
+    .result-summary { margin:0; color:#dbeafe; font-size: 1.05rem; max-width: 760px; }
+    .metrics-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .metric { padding:16px; border-radius:16px; background:#0f172a; border:1px solid #243244; }
+    .metric-label { margin:0 0 6px; color: var(--muted); font-size: 13px; }
+    .metric-value { margin:0; font-weight:700; }
+    .focus-box {
+      padding: 18px; border-radius: 18px; background: #0b1220; border: 1px solid #223247;
+    }
+    .focus-box h3 { margin: 0 0 10px; color: #93c5fd; font-size: 14px; text-transform: uppercase; letter-spacing: .08em; }
+    .focus-box ul { margin:0; padding-left: 18px; color: #e5e7eb; display:grid; gap:8px; }
+    details { background:#0f172a; border:1px solid #223247; border-radius:16px; padding: 16px; }
+    summary { cursor:pointer; font-weight:700; }
+    .fine { color: var(--muted); font-size: .95rem; }
+    @media (max-width: 900px) {
+      .feature-grid, .two-col, .three-col, .metrics-grid { grid-template-columns: 1fr; }
+      .nav-inner { flex-direction: column; align-items:flex-start; }
+      .nav-links { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container nav-inner">
+      <a href="/" class="logo">Black Creek<span>.</span></a>
+      <div class="nav-links">
+        <a href="/">Main site</a>
+        <a href="mailto:hello@blkcrk.com?subject=Inbound%20workflow%20assessment">Talk to Black Creek</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="hero">
+      <div class="eyebrow">Inbound Qualification Sprint</div>
+      <h1>Turn your contact flow into a self-serve workflow assessment.</h1>
+      <p>Share a few details about your lead flow, tools, and current bottleneck. You’ll get a fast read on likely friction, fit, and the best next step.</p>
+    </section>
+
+    <section class="feature-grid">
+      <div class="card">
+        <h2>Prospect-facing value</h2>
+        <p>A prospective client gets a useful diagnosis instead of a vague handoff form.</p>
+      </div>
+      <div class="card">
+        <h2>Clear qualification</h2>
+        <p>The workflow captures context up front: bottleneck, urgency, volume, and tooling.</p>
+      </div>
+      <div class="card">
+        <h2>Better next step</h2>
+        <p>The output points toward discovery, follow-up, or a tighter scoping conversation.</p>
+      </div>
+    </section>
+
+    <section class="form-wrap">
+      <form class="panel" id="assessment-form">
+        <h2 class="form-title">Assess your inbound workflow</h2>
+        <p class="form-copy">This is designed for founder-led and operator-led service businesses dealing with manual qualification, routing friction, slow follow-up, messy CRM state, or similar workflow drag.</p>
+
+        <div class="two-col">
+          <label>Name<input name="name" required></label>
+          <label>Work email<input name="email" type="email" required></label>
+          <label>Company<input name="company"></label>
+          <label>Website<input name="website" placeholder="example.com"></label>
+        </div>
+
+        <div class="three-col">
+          <label>Main bottleneck
+            <select name="painArea">
+              <option value="lead_qualification">Lead qualification</option>
+              <option value="routing">Routing / handoff</option>
+              <option value="follow_up">Follow-up speed</option>
+              <option value="crm_hygiene">CRM hygiene</option>
+              <option value="onboarding">Client onboarding</option>
+              <option value="reporting">Reporting visibility</option>
+              <option value="other">Other workflow issue</option>
+            </select>
+          </label>
+          <label>Approx. inbound volume
+            <select name="leadVolume">
+              <option value="0_10">0-10 / month</option>
+              <option value="11_50" selected>11-50 / month</option>
+              <option value="51_200">51-200 / month</option>
+              <option value="200_plus">200+ / month</option>
+            </select>
+          </label>
+          <label>Desired timeline
+            <select name="timeline">
+              <option value="immediate">Immediate</option>
+              <option value="30_days" selected>Within 30 days</option>
+              <option value="quarter">This quarter</option>
+              <option value="exploring">Exploring</option>
+            </select>
+          </label>
+        </div>
+
+        <label>Current tools
+          <input name="currentTools" placeholder="HubSpot, Zapier, Slack">
+        </label>
+
+        <label>What is breaking right now?
+          <textarea name="message" required placeholder="Example: We get 40-60 inbound leads a month, qualification is inconsistent, and founders still manually sort inquiries before follow-up."></textarea>
+        </label>
+
+        <div class="actions">
+          <button type="submit">Run assessment</button>
+          <p class="status" id="status">Status: <strong>idle</strong></p>
+        </div>
+        <p class="error" id="error"></p>
+      </form>
+
+      <section class="panel" id="result">
+        <div class="result-head">
+          <div>
+            <div class="eyebrow">Assessment result</div>
+            <h2 class="result-title" id="result-title"></h2>
+            <p class="result-summary" id="result-summary"></p>
+          </div>
+          <span class="result-badge" id="result-badge"></span>
+        </div>
+
+        <div class="metrics-grid">
+          <div class="metric">
+            <p class="metric-label">Likely bottleneck</p>
+            <p class="metric-value" id="metric-bottleneck"></p>
+          </div>
+          <div class="metric">
+            <p class="metric-label">Recommended next step</p>
+            <p class="metric-value" id="metric-next"></p>
+          </div>
+          <div class="metric">
+            <p class="metric-label">Confidence</p>
+            <p class="metric-value" id="metric-confidence"></p>
+          </div>
+        </div>
+
+        <div class="focus-box">
+          <h3>What we’d focus on first</h3>
+          <ul id="focus-list"></ul>
+        </div>
+
+        <div class="actions">
+          <a class="button" href="mailto:hello@blkcrk.com?subject=Inbound%20workflow%20assessment%20follow-up">Continue the conversation</a>
+          <a class="button button-outline" href="/">Return to main site</a>
+        </div>
+
+        <details>
+          <summary>Internal operator summary</summary>
+          <p id="operator-summary"></p>
+          <p class="fine" id="operator-metrics"></p>
+        </details>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const labels = {
+      lead_qualification: 'lead qualification',
+      routing: 'lead routing',
+      follow_up: 'follow-up speed',
+      crm_hygiene: 'CRM hygiene',
+      onboarding: 'client onboarding',
+      reporting: 'reporting visibility',
+      other: 'workflow design'
+    };
+
+    const leadWeights = { '0_10': 2, '11_50': 8, '51_200': 14, '200_plus': 18 };
+    const timelineWeights = { immediate: 20, '30_days': 14, quarter: 8, exploring: 2 };
+    const toolSignals = ['hubspot','highlevel','gohighlevel','airtable','zapier','make','slack','n8n','salesforce'];
+
+    function normalizeWebsite(value) {
+      const raw = (value || '').trim().toLowerCase();
+      if (!raw) return '';
+      if (raw.startsWith('http://') || raw.startsWith('https://')) return raw;
+      return `https://${raw}`;
+    }
+
+    function inferIndustry(form) {
+      const haystack = `${form.company} ${form.website} ${form.message}`.toLowerCase();
+      if (/agency|marketing|creative|seo|paid media/.test(haystack)) return 'agency / marketing services';
+      if (/recruit|staffing|talent/.test(haystack)) return 'recruiting / staffing';
+      if (/consult|advisory|fractional/.test(haystack)) return 'consulting / advisory';
+      if (/saas|software|platform|app/.test(haystack)) return 'software / SaaS';
+      if (/clinic|medical|health/.test(haystack)) return 'healthcare services';
+      return 'service business';
+    }
+
+    function inferCompanySize(leadVolume) {
+      if (leadVolume === '200_plus') return '25-50 employees or a high-volume operator';
+      if (leadVolume === '51_200') return '10-25 employees or a growing operator';
+      if (leadVolume === '11_50') return '3-15 employees or a small operating team';
+      return 'founder-led or very small team';
+    }
+
+    function assess(form) {
+      const message = form.message.toLowerCase();
+      const tools = form.currentTools.toLowerCase();
+      const industry = inferIndustry(form);
+      const painSignals = [];
+      const fitSignals = [];
+      const rationale = [];
+      const disqualifiers = [];
+      let fitScore = 15;
+      let urgencyScore = 5;
+
+      fitScore += leadWeights[form.leadVolume] || 0;
+      urgencyScore += timelineWeights[form.timeline] || 0;
+
+      if (form.painArea !== 'other') {
+        fitScore += 12;
+        rationale.push(`Clear pain area identified: ${labels[form.painArea]}.`);
+      }
+      if (/manual|manually|copy|paste|spreadsheet/.test(message)) painSignals.push('manual processing overhead');
+      if (/slow|delay|late|stuck/.test(message)) painSignals.push('slow response or workflow lag');
+      if (/inconsistent|messy|chaos|missing/.test(message)) painSignals.push('inconsistent qualification or routing');
+      if (/crm|hubspot|highlevel|salesforce/.test(message)) fitSignals.push('existing CRM footprint');
+      if (/lead|inbound|qualification|route|follow-up/.test(message)) fitSignals.push('inbound workflow pain');
+      if (/onboard|client intake/.test(message)) fitSignals.push('intake or onboarding process pain');
+      if (form.currentTools.trim()) fitSignals.push('tooling already in place for automation');
+
+      if (fitSignals.length) {
+        fitScore += Math.min(fitSignals.length * 8, 24);
+        rationale.push(`Service-fit signals detected: ${fitSignals.join(', ')}.`);
+      }
+      if (painSignals.length) {
+        urgencyScore += Math.min(painSignals.length * 6, 18);
+        rationale.push(`Operational pain is visible: ${painSignals.join(', ')}.`);
+      }
+      if (toolSignals.some(tool => tools.includes(tool))) {
+        fitScore += 10;
+        rationale.push('Existing tools suggest this can be improved quickly without a full re-platform.');
+      }
+      if (/manual|inconsistent|slow|lost|missed|spreadsheet|follow-up|routing|qualification/.test(message)) {
+        fitScore += 14;
+        urgencyScore += 8;
+      }
+      if (/student|job seeker|looking for work|guest post|link exchange|seo service/.test(message)) {
+        disqualifiers.push('Likely not a qualified buyer for the sprint.');
+      }
+      if (!form.company && !form.website && /@gmail\.com$/i.test(form.email)) {
+        fitScore -= 10;
+        rationale.push('Low business context provided, so confidence should stay moderate.');
+      }
+
+      fitScore = Math.max(0, Math.min(100, fitScore));
+      urgencyScore = Math.max(0, Math.min(100, urgencyScore));
+      const fitLabel = disqualifiers.length ? 'low' : fitScore >= 80 ? 'high' : fitScore >= 50 ? 'medium' : 'low';
+      const recommendedAction = disqualifiers.length ? 'Not a fit right now' : fitScore >= 80 && urgencyScore >= 20 ? 'Priority discovery call' : fitScore >= 80 ? 'Book a discovery call' : fitScore >= 50 && urgencyScore >= 14 ? 'Fast follow-up' : fitScore >= 50 ? 'Manual review' : 'Keep in nurture';
+      const confidence = Math.max(45, Math.min(92, fitScore - (form.company ? 0 : 8) + (fitSignals.length * 3)));
+      const summary = fitLabel === 'high'
+        ? `Your team appears to have a real workflow bottleneck around ${labels[form.painArea]}. Black Creek is likely a strong fit if you want a practical sprint instead of a broad transformation project.`
+        : fitLabel === 'medium'
+          ? 'There is a visible workflow problem here, but the best next step is a tighter scoping conversation before committing to a sprint.'
+          : 'There may be a workflow issue, but the current inputs do not strongly indicate a high-fit inbound qualification sprint.';
+      const title = fitLabel === 'high'
+        ? 'Strong fit for an Inbound Qualification Sprint'
+        : fitLabel === 'medium'
+          ? 'Possible fit for a focused workflow sprint'
+          : 'Probably not the right first engagement';
+
+      const bullets = [
+        `${form.company || 'Your business'} appears to be a ${industry} with workflow friction around ${labels[form.painArea]}.`,
+        rationale[0] || 'Qualification completed.',
+        `Recommended next step: ${recommendedAction}.`
+      ];
+
+      return {
+        fitLabel, fitScore, urgencyScore, confidence, title, summary, recommendedAction,
+        likelyBottleneck: labels[form.painArea], bullets,
+        operatorSummary: `${form.name} at ${form.company || form.website || 'unknown company'} is a ${fitLabel}-fit lead with ${urgencyScore}/100 urgency. Likely bottleneck: ${labels[form.painArea]}. Recommended action: ${recommendedAction}.`,
+        operatorMetrics: `Fit score ${fitScore} / 100 · urgency ${urgencyScore} / 100 · inferred size ${inferCompanySize(form.leadVolume)}.`,
+      };
+    }
+
+    const formEl = document.getElementById('assessment-form');
+    const statusEl = document.getElementById('status');
+    const errorEl = document.getElementById('error');
+    const resultEl = document.getElementById('result');
+
+    formEl.addEventListener('submit', (event) => {
+      event.preventDefault();
+      errorEl.textContent = '';
+      statusEl.innerHTML = 'Status: <strong>submitting</strong>';
+
+      const data = new FormData(formEl);
+      const form = Object.fromEntries(data.entries());
+      form.website = normalizeWebsite(form.website);
+
+      if (!form.name || !form.email || !form.message || form.message.trim().length < 20) {
+        errorEl.textContent = 'Please provide name, email, and a clear description of the workflow problem.';
+        statusEl.innerHTML = 'Status: <strong>error</strong>';
+        return;
+      }
+
+      const result = assess(form);
+      document.getElementById('result-title').textContent = result.title;
+      document.getElementById('result-summary').textContent = result.summary;
+      document.getElementById('metric-bottleneck').textContent = result.likelyBottleneck;
+      document.getElementById('metric-next').textContent = result.recommendedAction;
+      document.getElementById('metric-confidence').textContent = `${result.confidence}%`;
+      document.getElementById('operator-summary').textContent = result.operatorSummary;
+      document.getElementById('operator-metrics').textContent = result.operatorMetrics;
+
+      const badge = document.getElementById('result-badge');
+      badge.textContent = `${result.fitLabel.toUpperCase()} FIT`;
+      if (result.fitLabel === 'high') {
+        badge.style.background = 'rgba(34,197,94,0.16)';
+        badge.style.color = '#86efac';
+      } else if (result.fitLabel === 'medium') {
+        badge.style.background = 'rgba(245,158,11,0.16)';
+        badge.style.color = '#fcd34d';
+      } else {
+        badge.style.background = 'rgba(239,68,68,0.16)';
+        badge.style.color = '#fca5a5';
+      }
+
+      const focus = document.getElementById('focus-list');
+      focus.innerHTML = '';
+      result.bullets.forEach((bullet) => {
+        const li = document.createElement('li');
+        li.textContent = bullet;
+        focus.appendChild(li);
+      });
+
+      localStorage.setItem('blkcrk_assessment_last', JSON.stringify({ form, result, at: new Date().toISOString() }));
+      resultEl.style.display = 'grid';
+      statusEl.innerHTML = 'Status: <strong>submitted</strong>';
+      resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    const prior = localStorage.getItem('blkcrk_assessment_last');
+    if (prior) {
+      try {
+        const { form } = JSON.parse(prior);
+        Object.entries(form).forEach(([key, value]) => {
+          if (formEl.elements[key]) formEl.elements[key].value = value;
+        });
+      } catch {}
+    }
+  </script>
+</body>
+</html>
