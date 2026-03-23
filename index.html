@@ -3,75 +3,373 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Black Creek Technology</title>
+  <title>Black Creek Technology | Data Engineering & AI Systems</title>
+  <meta name="description" content="Black Creek Technology helps organizations design modern data platforms, deploy production AI systems, and build agent-powered workflows that create measurable business value.">
+  <meta property="og:title" content="Black Creek Technology | Data Engineering & AI Systems">
+  <meta property="og:description" content="Modern data platforms, production AI systems, and agent workflows built for real business outcomes.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://blkcrk.com/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #0a0a0f;
       --bg2: #111118;
+      --bg3: #151520;
       --accent: #00F5FF;
+      --accent-soft: rgba(0,245,255,0.12);
       --text: #f0f0f0;
-      --muted: #888;
+      --muted: #9a9aa8;
+      --border: #1a1a2e;
+      --max: 1200px;
     }
+    html { scroll-behavior: smooth; }
     body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
     a { color: var(--accent); text-decoration: none; }
+    .container { width: min(100% - 3rem, var(--max)); margin: 0 auto; }
 
     /* NAV */
-    nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 8%; position: sticky; top: 0; background: rgba(10,10,15,0.85); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid #1a1a2e; }
-    .logo { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.5px; }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      gap: 24px;
+    }
+    .logo { font-size: 1.3rem; font-weight: 700; letter-spacing: -0.5px; color: var(--text); }
     .logo span { color: var(--accent); }
-    nav ul { list-style: none; display: flex; gap: 32px; }
+    nav ul { list-style: none; display: flex; gap: 28px; align-items: center; }
     nav ul a { color: var(--muted); font-size: 0.95rem; transition: color 0.2s; }
     nav ul a:hover { color: var(--accent); }
+    .nav-cta {
+      border: 1px solid rgba(0,245,255,0.3);
+      padding: 10px 16px;
+      border-radius: 999px;
+      color: var(--accent);
+    }
 
     /* HERO */
-    #hero { min-height: 92vh; display: flex; flex-direction: column; justify-content: center; padding: 0 8%; position: relative; overflow: hidden; }
-    #hero::before { content: ''; position: absolute; top: -200px; right: -200px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(0,245,255,0.08) 0%, transparent 70%); pointer-events: none; }
-    .tag { display: inline-block; color: var(--accent); border: 1px solid rgba(0,245,255,0.3); padding: 4px 14px; border-radius: 20px; font-size: 0.85rem; margin-bottom: 24px; letter-spacing: 1px; }
-    h1 { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 700; line-height: 1.1; letter-spacing: -2px; max-width: 800px; }
+    #hero {
+      position: relative;
+      overflow: hidden;
+      padding: 110px 0 80px;
+    }
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: -180px;
+      right: -180px;
+      width: 560px;
+      height: 560px;
+      background: radial-gradient(circle, rgba(0,245,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      left: -120px;
+      bottom: -120px;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(0,245,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .tag {
+      display: inline-block;
+      color: var(--accent);
+      border: 1px solid rgba(0,245,255,0.25);
+      background: var(--accent-soft);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    h1 {
+      font-size: clamp(2.8rem, 6vw, 5.4rem);
+      font-weight: 700;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      max-width: 850px;
+    }
     h1 span { color: var(--accent); }
-    .hero-sub { color: var(--muted); font-size: 1.2rem; max-width: 560px; margin: 24px 0 40px; }
-    .btn { display: inline-block; background: var(--accent); color: #000; padding: 14px 32px; border-radius: 6px; font-weight: 600; font-size: 1rem; transition: opacity 0.2s; }
-    .btn:hover { opacity: 0.85; }
-    .btn-outline { background: transparent; color: var(--accent); border: 1px solid var(--accent); margin-left: 16px; }
+    .hero-sub {
+      color: var(--muted);
+      font-size: 1.15rem;
+      max-width: 700px;
+      margin: 24px 0 32px;
+    }
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 18px;
+      margin-bottom: 36px;
+      color: #d7d7df;
+      font-size: 0.98rem;
+    }
+    .hero-points div::before {
+      content: '•';
+      color: var(--accent);
+      margin-right: 10px;
+    }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid rgba(0,245,255,0.45);
+    }
+    .hero-panel {
+      background: linear-gradient(180deg, rgba(21,21,32,0.95), rgba(10,10,15,0.95));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    }
+    .hero-panel h2 {
+      font-size: 1.1rem;
+      margin-bottom: 14px;
+      letter-spacing: 0;
+    }
+    .panel-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .panel-item {
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+    }
+    .panel-item strong { display: block; margin-bottom: 4px; }
+    .panel-item span { color: var(--muted); font-size: 0.95rem; }
+
+    /* TRUST BAR */
+    #proof-strip {
+      padding: 18px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: #0d0d14;
+    }
+    .proof-strip-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    .proof-pill {
+      color: #d5d5dc;
+      border: 1px solid rgba(255,255,255,0.05);
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    /* GENERAL SECTIONS */
+    section { padding: 100px 0; }
+    #services, #process, #contact { background: var(--bg2); }
+    .section-label {
+      color: var(--accent);
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 52px;
+    }
+    h2 {
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0;
+      max-width: 750px;
+    }
+    .section-copy {
+      color: var(--muted);
+      max-width: 520px;
+    }
 
     /* SERVICES */
-    #services { padding: 100px 8%; background: var(--bg2); }
-    .section-label { color: var(--accent); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
-    h2 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; letter-spacing: -1px; margin-bottom: 60px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-    .card { background: var(--bg); border: 1px solid #1a1a2e; border-radius: 12px; padding: 32px; transition: border-color 0.2s, transform 0.2s; }
-    .card:hover { border-color: rgba(0,245,255,0.4); transform: translateY(-4px); }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .card:hover { border-color: rgba(0,245,255,0.35); transform: translateY(-3px); }
     .card-icon { font-size: 2rem; margin-bottom: 16px; }
     .card h3 { font-size: 1.2rem; margin-bottom: 10px; }
-    .card p { color: var(--muted); font-size: 0.95rem; }
+    .card p { color: var(--muted); font-size: 0.96rem; margin-bottom: 14px; }
+    .card ul { list-style: none; display: grid; gap: 8px; color: #d8d8df; font-size: 0.95rem; }
+    .card li::before { content: '–'; color: var(--accent); margin-right: 10px; }
+
+    /* PROCESS */
+    .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+    .step {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .step-num {
+      width: 38px;
+      height: 38px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .step p { color: var(--muted); }
 
     /* ABOUT */
-    #about { padding: 100px 8%; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    #about .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
     #about p { color: var(--muted); margin-bottom: 16px; font-size: 1.05rem; }
-    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
-    .stat { border-left: 2px solid var(--accent); padding-left: 16px; }
-    .stat h3 { font-size: 2rem; font-weight: 700; color: var(--accent); }
-    .stat p { color: var(--muted); font-size: 0.9rem; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .stat {
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .stat h3 { font-size: 2rem; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+    .stat p { color: var(--muted); font-size: 0.95rem; margin: 0; }
 
     /* CONTACT */
-    #contact { padding: 100px 8%; background: var(--bg2); text-align: center; }
-    #contact h2 { margin-bottom: 16px; }
-    #contact p { color: var(--muted); max-width: 500px; margin: 0 auto 40px; }
-    form { display: flex; flex-direction: column; gap: 16px; max-width: 520px; margin: 0 auto; }
-    input, textarea { background: var(--bg); border: 1px solid #1a1a2e; color: var(--text); padding: 14px 18px; border-radius: 6px; font-family: inherit; font-size: 1rem; transition: border-color 0.2s; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .contact-card,
+    .contact-form {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 32px;
+    }
+    .contact-card p,
+    .contact-form p { color: var(--muted); }
+    .contact-list { list-style: none; display: grid; gap: 14px; margin: 24px 0; }
+    .contact-list li {
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+      color: #d8d8df;
+    }
+    form { display: flex; flex-direction: column; gap: 14px; margin-top: 20px; }
+    label { font-size: 0.95rem; color: #dcdce3; }
+    input, textarea {
+      width: 100%;
+      margin-top: 8px;
+      background: #0e0e14;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
     input:focus, textarea:focus { outline: none; border-color: var(--accent); }
     textarea { resize: vertical; min-height: 140px; }
-    button[type=submit] { background: var(--accent); color: #000; padding: 14px; border: none; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
-    button[type=submit]:hover { opacity: 0.85; }
+    .form-note { font-size: 0.88rem; color: var(--muted); margin-top: 6px; }
+    button[type=submit] {
+      background: var(--accent);
+      color: #000;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-top: 4px;
+    }
+    button[type=submit]:hover { opacity: 0.88; }
 
     /* FOOTER */
-    footer { padding: 32px 8%; border-top: 1px solid #1a1a2e; display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 0.9rem; }
+    footer {
+      padding: 28px 0 36px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.92rem;
+      background: var(--bg);
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      #about .about-grid,
+      .contact-grid,
+      .steps,
+      .proof-strip-inner,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .section-head { align-items: start; flex-direction: column; }
+    }
 
     @media (max-width: 768px) {
-      #about { grid-template-columns: 1fr; gap: 40px; }
       nav ul { display: none; }
+      #hero { padding-top: 84px; }
+      .hero-points { grid-template-columns: 1fr; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .footer-inner { flex-direction: column; align-items: start; }
+    }
+
+    @media (max-width: 560px) {
+      .container { width: min(100% - 1.5rem, var(--max)); }
+      .stat-grid { grid-template-columns: 1fr; }
+      .contact-card,
+      .contact-form,
+      .card,
+      .step,
+      .hero-panel { padding: 24px; }
+      .btn { width: 100%; text-align: center; }
     }
   </style>
 
@@ -81,7 +379,7 @@
     "@type": "Organization",
     "name": "Black Creek Technology",
     "url": "https://blkcrk.com",
-    "description": "Boutique consultancy specializing in data engineering and ML/AI enablement.",
+    "description": "Boutique consultancy specializing in data engineering, production AI systems, and agent-powered workflow automation.",
     "serviceType": ["Data Engineering", "ML/AI Enablement", "AI Agent Systems", "Data Strategy"],
     "sameAs": ["https://github.com/blkcrk"]
   }
@@ -90,83 +388,223 @@
 <body>
 
   <nav>
-    <div class="logo">Black Creek<span>.</span></div>
-    <ul>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <div class="container nav-inner">
+      <a href="#hero" class="logo">Black Creek<span>.</span></a>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact" class="nav-cta">Start a Project</a></li>
+      </ul>
+    </div>
   </nav>
 
   <section id="hero">
-    <div class="tag">Data Engineering · ML/AI Enablement</div>
-    <h1>Build Smarter.<br><span>Scale Faster.</span></h1>
-    <p class="hero-sub">Black Creek Technology helps organizations unlock the power of data and AI — from pipeline architecture to production ML systems.</p>
-    <div>
-      <a href="#contact" class="btn">Get in Touch</a>
-      <a href="#services" class="btn btn-outline">Our Services</a>
+    <div class="container hero-grid">
+      <div>
+        <div class="tag">Data Platforms · AI Delivery · Agent Systems</div>
+        <h1>Turn your data stack into a <span>real operating advantage.</span></h1>
+        <p class="hero-sub">Black Creek Technology helps teams modernize data infrastructure, ship production AI systems, and automate high-friction workflows with intelligent agents.</p>
+        <div class="hero-points">
+          <div>Design scalable lakehouse and streaming architectures</div>
+          <div>Move ML and LLM initiatives from prototype to production</div>
+          <div>Build agent workflows that reduce manual operations</div>
+          <div>Deliver measurable outcomes without enterprise bloat</div>
+        </div>
+        <div class="cta-row">
+          <a href="#contact" class="btn">Book a Discovery Call</a>
+          <a href="#services" class="btn btn-outline">Explore Services</a>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Engagement highlights">
+        <h2>Where we create leverage</h2>
+        <div class="panel-list">
+          <div class="panel-item">
+            <strong>Data foundations</strong>
+            <span>Pipelines, orchestration, warehouse design, observability, and governance patterns built to scale.</span>
+          </div>
+          <div class="panel-item">
+            <strong>AI in production</strong>
+            <span>Model delivery, evaluation, integration, and deployment workflows that survive contact with reality.</span>
+          </div>
+          <div class="panel-item">
+            <strong>Agent automation</strong>
+            <span>Systems that coordinate tools, decisions, and human checkpoints across complex business processes.</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section id="proof-strip" aria-label="Value propositions">
+    <div class="container proof-strip-inner">
+      <div class="proof-pill">Boutique execution with senior-level depth</div>
+      <div class="proof-pill">Production-minded architecture, not demo ware</div>
+      <div class="proof-pill">Cloud-native delivery across modern data stacks</div>
+      <div class="proof-pill">Fast engagement cycles with direct collaboration</div>
     </div>
   </section>
 
   <section id="services">
-    <div class="section-label">What We Do</div>
-    <h2>End-to-End Data & AI Solutions</h2>
-    <div class="grid">
-      <div class="card">
-        <div class="card-icon">⚙️</div>
-        <h3>Data Engineering</h3>
-        <p>Modern data pipelines, lakehouse architecture, ETL/ELT, and real-time streaming solutions built for scale.</p>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-label">Services</div>
+          <h2>End-to-end systems for data, AI, and operational leverage.</h2>
+        </div>
+        <p class="section-copy">Whether you need a stronger data foundation, a production-ready AI roadmap, or workflow automation that actually works, Black Creek helps close the gap between ambition and execution.</p>
       </div>
-      <div class="card">
-        <div class="card-icon">🤖</div>
-        <h3>ML/AI Enablement</h3>
-        <p>From model development to production deployment — we help teams build, train, and ship ML systems with confidence.</p>
+
+      <div class="grid">
+        <div class="card">
+          <div class="card-icon">⚙️</div>
+          <h3>Data Engineering</h3>
+          <p>Build reliable pipelines and modern platforms that support analytics, AI, and decision-making at scale.</p>
+          <ul>
+            <li>Batch and real-time data pipelines</li>
+            <li>Lakehouse and warehouse architecture</li>
+            <li>ETL/ELT modernization and orchestration</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🤖</div>
+          <h3>ML &amp; AI Enablement</h3>
+          <p>Turn experiments into usable systems with the infrastructure, evaluation, and deployment patterns production teams need.</p>
+          <ul>
+            <li>Model deployment and MLOps workflows</li>
+            <li>LLM integration and application architecture</li>
+            <li>Evaluation, monitoring, and operational readiness</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🧠</div>
+          <h3>AI Agent Systems</h3>
+          <p>Design agents that coordinate tools and humans to automate multi-step work without losing control or traceability.</p>
+          <ul>
+            <li>Agent orchestration and workflow design</li>
+            <li>Human-in-the-loop checkpoints</li>
+            <li>Tool integration and decision automation</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h3>Data Strategy</h3>
+          <p>Align architecture, governance, and investment with the business outcomes your team is actually accountable for.</p>
+          <ul>
+            <li>Platform roadmap and capability planning</li>
+            <li>Analytics and AI readiness assessments</li>
+            <li>Pragmatic advisory for technical leaders</li>
+          </ul>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-icon">🧠</div>
-        <h3>AI Agent Systems</h3>
-        <p>Design and deploy intelligent agent orchestration systems that automate complex workflows and decision-making.</p>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-label">Process</div>
+          <h2>A practical delivery model built for momentum.</h2>
+        </div>
+        <p class="section-copy">The goal is not to produce more slides. It’s to identify the highest-leverage path, build the right system, and leave your team stronger than we found it.</p>
       </div>
-      <div class="card">
-        <div class="card-icon">📊</div>
-        <h3>Data Strategy</h3>
-        <p>Advisory services to align your data infrastructure, governance, and analytics capabilities with business goals.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Assess</h3>
+          <p>We map the current state, identify constraints, and isolate the decisions that matter most for delivery speed, reliability, and ROI.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>Build</h3>
+          <p>We implement modern data and AI systems with clear scope, direct communication, and an emphasis on maintainability.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Operationalize</h3>
+          <p>We harden workflows, introduce observability, and create the handoff patterns your internal team needs to run with confidence.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <section id="about">
-    <div>
-      <div class="section-label">About Us</div>
-      <h2>Technology That Moves Business Forward</h2>
-      <p>Black Creek Technology is a boutique consultancy specializing in data engineering and ML/AI enablement for forward-thinking organizations.</p>
-      <p>We partner with teams to design scalable infrastructure, implement modern AI capabilities, and deliver measurable outcomes — fast.</p>
-    </div>
-    <div class="stat-grid">
-      <div class="stat"><h3>10+</h3><p>Years of experience</p></div>
-      <div class="stat"><h3>50+</h3><p>Projects delivered</p></div>
-      <div class="stat"><h3>100%</h3><p>Cloud native</p></div>
-      <div class="stat"><h3>24/7</h3><p>Support available</p></div>
+    <div class="container about-grid">
+      <div>
+        <div class="section-label">About</div>
+        <h2>Senior technical execution for teams moving fast.</h2>
+        <p>Black Creek Technology is a boutique consultancy focused on data engineering, AI enablement, and intelligent systems design.</p>
+        <p>We work with organizations that need to modernize quickly, reduce technical drag, and translate emerging AI capabilities into dependable business systems.</p>
+        <p>Our bias is toward clarity, speed, and production reality — not inflated transformation theater.</p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat"><h3>10+</h3><p>Years of experience across data and software systems</p></div>
+        <div class="stat"><h3>50+</h3><p>Projects delivered across modern cloud-native environments</p></div>
+        <div class="stat"><h3>100%</h3><p>Focused on scalable, modern architecture patterns</p></div>
+        <div class="stat"><h3>24/7</h3><p>Support availability for the right engagement model</p></div>
+      </div>
     </div>
   </section>
 
   <section id="contact">
-    <div class="section-label">Get In Touch</div>
-    <h2>Let's Build Something Great</h2>
-    <p>Ready to modernize your data stack or enable AI at scale? We'd love to hear about your project.</p>
-    <form>
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Tell us about your project..."></textarea>
-      <button type="submit">Send Message</button>
-    </form>
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="section-label">Contact</div>
+          <h2>Let’s talk about the bottleneck holding your team back.</h2>
+        </div>
+        <p class="section-copy">If you’re modernizing your platform, operationalizing AI, or exploring agent workflows, we can help you identify the fastest path to value.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>Best fit engagements</h3>
+          <ul class="contact-list">
+            <li>Data platform modernization and architecture advisory</li>
+            <li>ML / LLM systems moving from prototype to production</li>
+            <li>AI agent design for internal workflow automation</li>
+            <li>Technical strategy support for engineering leadership</li>
+          </ul>
+          <p>Prefer email? Reach out directly at <a href="mailto:hello@blkcrk.com">hello@blkcrk.com</a>.</p>
+        </div>
+
+        <div class="contact-form">
+          <h3>Start the conversation</h3>
+          <p>Share a little context and we’ll know where to start.</p>
+          <form action="mailto:hello@blkcrk.com" method="post" enctype="text/plain">
+            <label>
+              Name
+              <input type="text" name="name" placeholder="Your name" required>
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" placeholder="you@company.com" required>
+            </label>
+            <label>
+              Project details
+              <textarea name="project" placeholder="What are you trying to build, fix, or accelerate?"></textarea>
+            </label>
+            <button type="submit">Email Black Creek</button>
+            <p class="form-note">If your device doesn’t support email forms cleanly, use the direct email link instead.</p>
+          </form>
+        </div>
+      </div>
+    </div>
   </section>
 
   <footer>
-    <span>© 2026 Black Creek Technology</span>
-    <span>blkcrk.com</span>
+    <div class="container footer-inner">
+      <span>© 2026 Black Creek Technology</span>
+      <span>blkcrk.com · Data Engineering &amp; AI Systems</span>
+    </div>
   </footer>
 
-<script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
